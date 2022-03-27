@@ -17,6 +17,7 @@
  * under the License.
  */
 task copyAndRenamePackage(type: Copy) {
+    println "[Weex]  task copyAndRenamePackage >>  useApachePackageName = ${project.useApachePackageName}"
     if(!project.useApachePackageName) {
         inputs.dir new File('src/main/java/org/apache/weex')
         from new File('src/main/java/org/apache/weex')
@@ -31,9 +32,11 @@ task copyAndRenamePackage(type: Copy) {
             })
         }
     }
+    println "[Weex]  task copyAndRenamePackage <<"
 }
 
 task copyManifest(type: Copy){
+    println "[Weex]  task copyManifest >>"
     if(!project.useApachePackageName){
         inputs.file new File('src/main/AndroidManifest.xml')
         from new File('src/main/AndroidManifest.xml')
@@ -44,9 +47,11 @@ task copyManifest(type: Copy){
             })
         }
     }
+    println "[Weex]  task copyManifest <<"
 }
 
 task copyProguard(type: Copy){
+    println "[Weex]  task copyProguard >>"
     if(!project.useApachePackageName){
         inputs.file new File('proguard-rules.pro')
         from new File('proguard-rules.pro')
@@ -58,22 +63,26 @@ task copyProguard(type: Copy){
             })
         }
     }
+    println "[Weex]  task copyProguard <<"
 }
 
-task(cleanCopyProguard, overwrite: true, type: Delete){
-    delete 'proguard-rules-legacy.pro'
-}
+//task(cleanCopyProguard, overwrite: true, type: Delete){
+//    delete 'proguard-rules-legacy.pro'
+//}
 
 task copyOtherCppFile(type: Copy){
+    println "[Weex]  task copyOtherCppFile >>"
     if(!project.useApachePackageName) {
         inputs.dir new File('../../weex_core')
         from new File('../../weex_core')
         into new File('src/legacyRelease/cpp')
         exclude '**/*.cpp', '**/*.cc', '**/*.c', '**/*.h', '**/*.hpp'
     }
+    println "[Weex]  task copyOtherCppFile <<"
 }
 
 task copyAndRenameCppSourceFile(type: Copy){
+    println "[Weex]  task copyAndRenameCppSourceFile >>"
     dependsOn copyOtherCppFile, copyJSCHeaderToWeexCore
     if(!project.useApachePackageName) {
         inputs.dir new File('../../weex_core')
@@ -87,6 +96,7 @@ task copyAndRenameCppSourceFile(type: Copy){
             })
         }
     }
+    println "[Weex]  task copyAndRenameCppSourceFile <<"
 }
 
 gradle.taskGraph.beforeTask { Task task ->
@@ -99,4 +109,4 @@ gradle.taskGraph.beforeTask { Task task ->
 }
 
 preBuild.dependsOn copyAndRenameCppSourceFile, copyAndRenamePackage, copyManifest, copyProguard
-clean.dependsOn cleanCopyAndRenamePackage, cleanCopyManifest, cleanCopyProguard, cleanCopyOtherCppFile, cleanCopyAndRenameCppSourceFile
+// clean.dependsOn cleanCopyAndRenamePackage, cleanCopyManifest, cleanCopyOtherCppFile, cleanCopyAndRenameCppSourceFile

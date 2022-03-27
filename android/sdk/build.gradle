@@ -24,7 +24,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
+// apply plugin: 'com.github.dcendents.android-maven'
 
 apply from: 'buildSrc/jcenter.gradle'
 apply from: 'buildSrc/unstripped.gradle'
@@ -193,6 +193,7 @@ android {
                 path '../../weex_core/CMakeLists.txt'
             }
             else{
+                println "[Weex]  copy CMakeLists.txt"
                 copy{
                     from new File('../../weex_core/CMakeLists.txt')
                     into new File('src/legacyRelease/cpp')
@@ -232,6 +233,11 @@ android {
             jvmArgs += ['-XX:-UseSplitVerifier', '-noverify','-Xverify:none']/* fix VerifyError  */
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -242,6 +248,7 @@ dependencies {
     //noinspection GradleDependency
     compileOnly "com.android.support:appcompat-v7:${project.supportLibVersion}"
     compileOnly "com.alibaba:fastjson:${project.fastjsonLibVersion}"
+    api(name:'oaid_sdk_1.1.0', ext:'aar')
 
     testImplementation "com.alibaba:fastjson:${project.fastjsonLibVersion}"
     testImplementation 'junit:junit:4.12'
@@ -291,4 +298,4 @@ task weex_core_license(type: com.hierynomus.gradle.license.tasks.LicenseFormat) 
 }
 
 preBuild.dependsOn licenseFormat, copyJSCHeaderToWeexCore
-clean.dependsOn cleanCopyJSCHeaderToWeexCore
+// clean.dependsOn cleanCopyJSCHeaderToWeexCore

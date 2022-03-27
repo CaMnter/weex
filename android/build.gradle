@@ -19,10 +19,13 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:4.2.0'
     }
 }
 
@@ -39,7 +42,10 @@ subprojects {
             }
         }
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     buildscript {
         dependencies {
@@ -48,7 +54,10 @@ subprojects {
         }
         repositories {
             google()
-            jcenter()
+            mavenCentral()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
         }
     }
 }

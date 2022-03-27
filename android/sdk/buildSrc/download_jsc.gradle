@@ -89,4 +89,4 @@ task copyJSCHeaderToWeexCore(type: Copy, dependsOn: unzipJSC) {
 }
 
 preBuild.dependsOn copyJscToJniDir
-clean.dependsOn cleanCopyJscToJniDir
+// clean.dependsOn cleanCopyJscToJniDir
